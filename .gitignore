@@ -144,4 +144,5 @@ AspNetZeroRadTool/
 /src/Prism.Web.Host/Properties/PublishProfiles/*
 
 /UpgradeLog*.htm
+node_modules
 

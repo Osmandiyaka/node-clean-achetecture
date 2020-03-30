@@ -1,5 +1,5 @@
 function AccountAppService(accountDb) {
-    const db=accountDb('banks');
+    const db=accountDb('accounts');
 
     return Object.freeze({
       createAccount,
@@ -11,10 +11,8 @@ function AccountAppService(accountDb) {
     });
 
    async function createAccount({body}) {
-      console.log(body)
        var result=await db.insert(body);
        return result;
-        
     }
 
     async function getAccounts() {

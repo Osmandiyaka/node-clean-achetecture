@@ -1,7 +1,5 @@
-const mongoose=require('mongoose');
-var Schema= mongoose.Schema;
 
-var Account=new Schema({
+var Account={
   name:{
       type:String,
       required:true
@@ -19,6 +17,6 @@ var Account=new Schema({
       required:true,
       default:Date.now()
   }
-});
+};
 
-module.exports= mongoose.model('banks',Account);
+module.exports=Account;

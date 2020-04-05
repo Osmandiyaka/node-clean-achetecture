@@ -19,12 +19,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const userDb=require('./auth/userDb')();
-var secure=require('./auth/routeSecurityManager')(userDb);
-secure('/api',app);
+const userDb = require("./auth/userDb")();
+var secure = require("./auth/routeSecurityManager")(userDb);
+secure("/api", app);
 
-require("./account/accountModule")({ app, httpRequestAdaptor });
-require('./auth/userController')({app,httpRequestAdaptor});
+require("./account").controller({ app, httpRequestAdaptor });
+require("./auth").controller({ app, httpRequestAdaptor });
 
 app.use(function(req, res, next) {
   next(createError(404));

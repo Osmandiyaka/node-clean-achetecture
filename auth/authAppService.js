@@ -5,9 +5,9 @@ const saltRounds = 10;
 
 function AuthAppService() {
   return Object.freeze({
-    generateHash: generateHash,
-    validatePassword: validatePassword,
-    generateJWT: generateJWT
+    generateHash,
+    compare,
+    generateJWT
   });
 
   function generateHash(password) {
@@ -16,7 +16,7 @@ function AuthAppService() {
     return hash;
   }
 
-  function validatePassword(plainPassword, hash) {
+  function compare(plainPassword, hash) {
     var isValid = bcrypt.compareSync(plainPassword, hash);
     return isValid;
   }
@@ -28,7 +28,7 @@ function AuthAppService() {
 
     return jwt.sign(
       {
-        email: user.eamilAddress,
+        email: user.emailAddress,
         id: user._id,
         exp: parseInt(expirationDate.getTime() / 1000, 10)
       },

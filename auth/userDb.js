@@ -2,17 +2,22 @@ const userSchema = require("./user");
 
 function UserDb() {
   return Object.freeze({
-    findUser: findUser,
+    find: find,
+    findOne:findOne,
     save: save
   });
 
-  function findUser(filter) {
+  function find(filter) {
     return userSchema.find(filter);
   }
 
   function save(user) {
     const userDb = new userSchema(user);
     return userDb.save();
+  }
+
+  function findOne({filter}) {
+    return userSchema.findOne(filter);
   }
 }
 

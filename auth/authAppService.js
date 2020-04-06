@@ -3,7 +3,7 @@ const jwt=require('jsonwebtoken');
 
 const saltRounds = 10;
 
-function AuthAppService({ userDb }) {
+function AuthAppService() {
   return Object.freeze({
     generateHash: generateHash,
     validatePassword: validatePassword,

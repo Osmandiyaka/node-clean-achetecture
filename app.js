@@ -24,6 +24,7 @@ var secure=require('./auth/routeSecurityManager')(userDb);
 secure('/api',app);
 
 require("./account/accountModule")({ app, httpRequestAdaptor });
+require('./auth/userController')({app,httpRequestAdaptor});
 
 app.use(function(req, res, next) {
   next(createError(404));

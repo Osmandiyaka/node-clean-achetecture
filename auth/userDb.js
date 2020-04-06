@@ -3,14 +3,14 @@ const userSchema = require("./user");
 function UserDb() {
   return Object.freeze({
     findUser: findUser,
-    createUser: saveUser
+    save: save
   });
 
   function findUser(filter) {
     return userSchema.find(filter);
   }
 
-  function saveUser(user) {
+  function save(user) {
     const userDb = new userSchema(user);
     return userDb.save();
   }

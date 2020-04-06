@@ -1,23 +1,14 @@
-function AccountAppService(accountDb) {
-    const db=accountDb('accounts');
+const { createAccount, findAccount } = require("./usecase/");
 
-    return Object.freeze({
-      createAccount,
-    //   deleteAccount,
-    //   blockAccount,
-    //   transfereMoney,
-    //   getAccount,
-      getAccounts
-    });
-
-   async function createAccount({body}) {
-       var result=await db.insert(body);
-       return result;
-    }
-
-    async function getAccounts() {
-      return db.findAll();
-    }
+function AccountAppService({ accountDb, modelBuilder, accountValidator }) {
+  return Object.freeze({
+    createAccount: createAccount({
+      accountDb,
+      modelBuilder,
+      accountValidator
+    })
+    // findById: findAccount(db)
+  });
 }
 
-module.exports=AccountAppService;
+module.exports = AccountAppService;

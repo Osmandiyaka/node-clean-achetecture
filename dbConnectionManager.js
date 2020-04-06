@@ -1,6 +1,3 @@
-const makeSchema=require('./makeMongooseModel');
-makeSchema('accounts',require('./account/account'));
-
 
 function connectionManager(dbProvider) {
     dbProvider.connection.on('connected', () => {

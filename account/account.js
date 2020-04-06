@@ -1,22 +1,23 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var Account={
-  name:{
-      type:String,
-      required:true
+const baseModel = require("../baseModel");
+
+var Account = {
+  name: {
+    type: String,
+    required: true
   },
-  holder:{
-      type:String,
-      required:true
+  balance: {
+    type: Number,
+    required: true
   },
-  accountNumber:{
-      type:String,
-      required:true
-  },
-  createdAt:{
-      type:String,
-      required:true,
-      default:Date.now()
+  accountNumber: {
+    type: String,
+    required: true
   }
 };
 
-module.exports=Account;
+const AccountSchema = new Schema(Account);
+
+module.exports = mongoose.model("accounts", AccountSchema);

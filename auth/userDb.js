@@ -16,7 +16,8 @@ function UserDb() {
     return userDb.save();
   }
 
-  function findOne({filter}) {
+  function findOne(filter) {
+    console.log(filter,'filter')
     return userSchema.findOne(filter);
   }
 }

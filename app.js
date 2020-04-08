@@ -7,11 +7,11 @@ var bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const connectionManager = require("./dbConnectionManager");
+const connectionManager = require("./core/dbConnectionManager");
 const connect = connectionManager(mongoose);
 connect("mongodb://localhost:27017/bank");
 
-const httpRequestAdaptor = require("./adaptHttpRequest");
+const httpRequestAdaptor = require("./core/adaptHttpRequest");
 
 var app = express();
 

@@ -1,7 +1,7 @@
 const {signIn,signup} =require('./usecase');
 
 const userDb=require('./userDb')();
-const modelBuilder = require("../modelBuilder");
+const modelBuilder = require("../core/modelBuilder");
 const userValidator=require('./userValidator');
 const authService=require('./authAppService')();
 

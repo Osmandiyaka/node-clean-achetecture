@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const baseModel = require("../baseModel");
+const baseModel = require("../core/baseModel");
 
 var Account = {
   name: {

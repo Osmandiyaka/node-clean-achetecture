@@ -6,8 +6,6 @@ const { Strategy, ExtractJwt } = passportJwt;
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
 opts.secretOrKey = "secret";
-// opts.issuer = "accounts.examplesoft.com";
-// opts.audience = "yoursite.net";
 
 function securityManager(findUser) {
   passport.use(
@@ -35,16 +33,11 @@ function securityManager(findUser) {
   function authenticateRequest() {
     return function (req, res, next) {
       passport.authenticate("jwt", handleAuth(res, next))(req, res, next);
-      // next();
     };
   }
 
   function handleAuth(res, next) {
     return (err,user)=>(err || !user)?res.sendStatus(401):next()
-    // return function (err, user) {
-    //   return (err || !user)?res.sendStatus(401):next()
-      
-    // };
   }
 }
 

@@ -1,4 +1,4 @@
-module.exports=function accountBuilder({accountRepository,auditLoger}) {
+module.exports=function accountBuilder({accountRepository}) {
   
   return Object.freeze({
      create:create,
@@ -17,6 +17,8 @@ module.exports=function accountBuilder({accountRepository,auditLoger}) {
       getAccountName:()=>account.accountName,
       debit:debit,
       credit:credit,
+      close:close,
+      block:block
 
     });
 
@@ -28,6 +30,14 @@ module.exports=function accountBuilder({accountRepository,auditLoger}) {
     function credit(amount) {
       account.balance+=amount;
       await accountRepository.update(account);
+    }
+
+    function close() {
+      
+    }
+
+    function block() {
+      
     }
   }
   

@@ -1,4 +1,24 @@
-const AccountSchema=require('./account');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+var Account = {
+    name: {
+      type: String,
+      required: true
+    },
+    balance: {
+      type: Number,
+      required: true
+    },
+    accountNumber: {
+      type: String,
+      required: true
+    }
+  };
+  
+  
+  const AccountSchema = mongoose.model("accounts", new Schema(Account));
+  
 
 function AccountDb() {
     

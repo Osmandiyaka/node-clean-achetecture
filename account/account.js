@@ -1,23 +1,34 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+module.exports=function accountBuilder({accountRepository,auditLoger}) {
+  
+  return Object.freeze({
+     create:create,
+     get:get
+  });
 
-const baseModel = require("../core/baseModel");
-
-var Account = {
-  name: {
-    type: String,
-    required: true
-  },
-  balance: {
-    type: Number,
-    required: true
-  },
-  accountNumber: {
-    type: String,
-    required: true
+  function create(accountEntity) {
+    
   }
-};
 
-const AccountSchema = new Schema(Account);
+  function get(id) {
+    const account=accountRepository.get(id);
+    return Object.freeze({
+      checkBalance:()=>account.balance,
+      getAccountNumber:()=>account.accountNumber,
+      getAccountName:()=>account.accountName,
+      debit:debit,
+      credit:credit,
 
-module.exports = mongoose.model("accounts", AccountSchema);
+    });
+
+    function debit(amount) {
+      account.balance-=amount;
+      await accountRepository.update(account);
+    }
+
+    function credit(amount) {
+      account.balance+=amount;
+      await accountRepository.update(account);
+    }
+  }
+  
+}

@@ -6,7 +6,9 @@ module.exports=function accountBuilder({accountRepository,auditLoger}) {
   });
 
   function create(accountEntity) {
-    
+    if(validateAccount(accountEntity)==true){
+     return  accountRepository.create(accountEntity)
+    }
   }
 
   function get(id) {
@@ -29,6 +31,10 @@ module.exports=function accountBuilder({accountRepository,auditLoger}) {
       account.balance+=amount;
       await accountRepository.update(account);
     }
+  }
+
+  function validateAccount(accountEntity){
+    return true;
   }
   
 }

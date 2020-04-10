@@ -1,4 +1,4 @@
-module.exports=function accountBuilder({accountRepository}) {
+module.exports=function accountBuilder(accountRepository) {
   
   return Object.freeze({
      create:create,
@@ -18,16 +18,18 @@ module.exports=function accountBuilder({accountRepository}) {
       debit:debit,
       credit:credit,
       close:close,
-      block:block
+      block:block,
+      equal:accountObj=>this.getAccountNumber()===accountObj.getAccountNumber(),
+      getId:()=>account._id3
 
     });
 
-    function debit(amount) {
+   async function debit(amount) {
       account.balance-=amount;
       await accountRepository.update(account);
     }
 
-    function credit(amount) {
+   async function credit(amount) {
       account.balance+=amount;
       await accountRepository.update(account);
     }
@@ -39,6 +41,16 @@ module.exports=function accountBuilder({accountRepository}) {
     function block() {
       
     }
+        
+  }
+
+  async function generateAccountNumber() {
+    const totalAccount=await accountRepository.count();
+
+    const today=new Date();
+    const createdAt=`${today.getFullYear}${today.getMonth} ${today.getDay}`;
+    
+    return `${createdAt}${totalAccount+1}`;
   }
   
 }

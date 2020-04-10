@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const baseRepoBuilder = require("../core/baseRepo");
+const BaseRepository = require("../core/baseRepo");
 const fullyAuditedEntity=require('../core/fullyAuditedEntity');
 
 var Account = {
@@ -21,8 +21,11 @@ var Account = {
 const FullyAuditedAccountSchema=Object.assign({},fullyAuditedEntity,Account);
 const AccountSchema = mongoose.model("accounts", new Schema(FullyAuditedAccountSchema));
 
-function AccountRepo() {
-  return Object.freeze(Object.assign({}, baseRepoBuilder(AccountSchema)));
+
+function AccountRepository() {
+  BaseRepository.call(this,AccountSchema);
 }
 
-module.exports = AccountDb;
+AccountRepository.prototype=Object.create(BaseRepository.prototype);
+
+module.exports = AccountRepository;

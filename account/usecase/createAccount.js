@@ -1,9 +1,9 @@
 module.exports = function makeAccountCreator({
-  accountRepo,
+  accountRepository,
   modelBuilder,
   accountValidator
 }) {
-  const db = accountRepo();
+  const db = accountRepository();
   return function createAccount({ body, appSession }) {
     const accountBuilder = modelBuilder({
       modelValidator: accountValidator,

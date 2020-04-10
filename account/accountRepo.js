@@ -29,3 +29,4 @@ function AccountRepository() {
 AccountRepository.prototype=Object.create(BaseRepository.prototype);
 
 module.exports = AccountRepository;
+

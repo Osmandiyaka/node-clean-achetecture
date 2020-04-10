@@ -1,14 +1,33 @@
-function baseRepoBuilder(Schema) {
+function baseRepoBuilder({Schema}) {
   if (!Schema) {
     throw new Error();
   }
 
-  function create(account) {
-    var db = new Schema(account);
+  return {
+    insert,
+    deleteById,
+    findById,
+    find,
+    findOne,
+    hardDelete,
+    updateById,
+    count
+  };
+
+  function insert(entity) {
+    var db = new Schema(entity);
     return db.save();
   }
 
-  function deleteById(id) {
+  async function deleteById(id) {
+    const entityToDelete = await findById(id);
+    if (entityToDelete === undefined)
+      throw new Error('Could not find entity with id' + id);
+    entityToDelete.isDeleted = true;
+    return updateById(id, entityToDelete);
+  }
+
+  function hardDelete(id) {
     return Schema.findByIdAndDelete(id);
   }
 
@@ -17,9 +36,9 @@ function baseRepoBuilder(Schema) {
   }
 
   function find(options) {
-    var where = options.where || {};
-    var sort = options.sort || {};
-    var select = options.select || [];
+    const where = options.where || {};
+    const sort = options.sort || {};
+    const select = options.select || [];
     const limit = options.limit || 15;
 
     return Schema.where(where)
@@ -32,13 +51,10 @@ function baseRepoBuilder(Schema) {
     return Schema.findOne(where);
   }
 
-  function deleteRecords(where) {
-    return Schema.deleteMany(where);
-  }
-
-  function updateById(id, account) {
+  
+  function updateById(id, entity) {
     delete account._id;
-    return Schema.findByIdAndUpdate(id, account, {
+    return Schema.findByIdAndUpdate(id, entity, {
       new: true,
       upsert: true
     });
@@ -47,16 +63,7 @@ function baseRepoBuilder(Schema) {
   function count(where = {}) {
     return Schema.countDocuments(where);
   }
-  return {
-    create,
-    deleteById,
-    findById,
-    find,
-    findOne,
-    deleteRecords,
-    updateById,
-    count
-  };
+
 }
 
 module.exports = baseRepoBuilder;

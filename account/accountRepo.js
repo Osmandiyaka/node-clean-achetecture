@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const baseRepoBuilder = require("../core/baseRepo");
+const fullyAuditedEntity=require('../core/fullyAuditedEntity');
 
 var Account = {
   name: {
@@ -17,7 +18,8 @@ var Account = {
   }
 };
 
-const AccountSchema = mongoose.model("accounts", new Schema(Account));
+const FullyAuditedAccountSchema=Object.assign({},fullyAuditedEntity,Account);
+const AccountSchema = mongoose.model("accounts", new Schema(FullyAuditedAccountSchema));
 
 function AccountRepo() {
   return Object.freeze(Object.assign({}, baseRepoBuilder(AccountSchema)));

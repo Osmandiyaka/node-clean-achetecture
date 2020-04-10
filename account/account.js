@@ -6,7 +6,9 @@ module.exports=function accountBuilder({accountRepository}) {
   });
 
   function create(accountEntity) {
-    
+    if(validateAccount(accountEntity)==true){
+     return  accountRepository.create(accountEntity)
+    }
   }
 
   function get(id) {
@@ -39,6 +41,10 @@ module.exports=function accountBuilder({accountRepository}) {
     function block() {
       
     }
+  }
+
+  function validateAccount(accountEntity){
+    return true;
   }
   
 }

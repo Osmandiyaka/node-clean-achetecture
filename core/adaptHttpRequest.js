@@ -1,3 +1,6 @@
+const makeAuditLogger=require('../auditLogs/auditLog');
+const auditLogDb=require('../auditLogs/auditLogRepository');
+
 function httpRequestAdaptor(controller) {
   return (req, res,next) => {
     const httpRequest = {
@@ -17,6 +20,7 @@ function httpRequestAdaptor(controller) {
       }
     };
 
+    const auditDb=makeAuditLogger(auditLogDb);
     controller(httpRequest)
       .then(result => {
         res.json(result);

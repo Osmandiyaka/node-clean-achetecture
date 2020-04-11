@@ -13,19 +13,24 @@ function customerBuilder({ customerRepository}) {
             deletePayee,
             requestCheckbook,
             payBill,
-            getId: () => customer._id
+            getId: () => customer._id,
+            getAccounts:getAccounts,
         });
 
         function checkBalance(params) {
+          
+        }
 
+        function getAccounts() {
+            
         }
 
         function checkStatement(params) {
 
         }
 
-        function transferFunds(params) {
-
+        function transferFunds(fromAccoutn, toAccount) {
+          
         }
 
         function addPayee(params) {

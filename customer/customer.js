@@ -1,7 +1,4 @@
-function customerBuilder({
-    customerRepository
-}) {
-
+function customerBuilder({ customerRepository}) {
     return Object.freeze({
         get: get,
     });

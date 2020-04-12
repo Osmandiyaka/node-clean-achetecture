@@ -11,7 +11,7 @@ BaseRepository.prototype.insert = function (entity) {
   return db.save();
 }
 
-BaseRepository.prototype.deleteById = function (id) {
+BaseRepository.prototype.deleteById =async function (id) {
   const entityToDelete = await this.findById(id);
   if (entityToDelete === undefined)
     throw new Error('Could not find entity with id' + id);

@@ -7,8 +7,8 @@ function makeAuditLogger(auditLogDb) {
     }
 
 
-    async function performLoging(func, params) {
-        return () => {
+     function performLoging(func, params) {
+        return async () => {
             try {
                 const funcName = getFuncName(func)
                 const loggerInput = {
@@ -28,8 +28,8 @@ function makeAuditLogger(auditLogDb) {
         };
     }
 
-    async function handleLogging(func, params) {
-        return (resolve, reject) => {
+     function handleLogging(func, params) {
+        return async (resolve, reject) => {
             try {
                 const funcStart = new Date();
                 const result = await func(params);
@@ -48,3 +48,5 @@ function makeAuditLogger(auditLogDb) {
         return func.name;
     }
 }
+
+module.exports=makeAuditLogger;

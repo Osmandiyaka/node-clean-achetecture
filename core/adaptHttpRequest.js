@@ -1,8 +1,9 @@
-const makeAuditLogger=require('../auditLogs/auditLog');
-const auditLogDb=require('../auditLogs/auditLogRepository');
+const makeAuditLogger = require('../auditLogs/auditLog');
+const auditLogDb = require('../auditLogs/auditLogRepository');
+const log = makeAuditLogger(auditLogDb);
 
 function httpRequestAdaptor(controller) {
-  return (req, res,next) => {
+  return (req, res, next) => {
     const httpRequest = {
       body: req.body,
       query: req.query,
@@ -20,15 +21,26 @@ function httpRequestAdaptor(controller) {
       }
     };
 
-    const auditDb=makeAuditLogger(auditLogDb);
-    controller(httpRequest)
+
+    log(controller, httpRequest)
       .then(result => {
         res.json(result);
       })
       .catch(err => {
         console.log(err);
-        res.status(500).send({ error: err.message });
+        res.status(500).send({
+          error: err.message
+        });
       });
+
+    // controller(httpRequest)
+    //   .then(result => {
+    //     res.json(result);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     res.status(500).send({ error: err.message });
+    //   });
   };
 }
 

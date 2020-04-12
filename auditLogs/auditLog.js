@@ -1,11 +1,10 @@
 function makeAuditLogger(auditLogDb) {
-    const db = auditLogDb();
+    const db = new auditLogDb();
     const that = this;
 
     return function log(func, params) {
-        return new Promise(handleLogging(func, params)).finally(performLoging());
+        return new Promise(handleLogging(func, params)).finally(performLoging(func,params));
     }
-
 
      function performLoging(func, params) {
         return async () => {
@@ -23,7 +22,7 @@ function makeAuditLogger(auditLogDb) {
                 }
                 await db.insert(loggerInput);
             } catch (err) {
-
+              console.log(err)
             }
         };
     }
@@ -38,6 +37,7 @@ function makeAuditLogger(auditLogDb) {
                 that.elapse = funcEnd - funcStart;
                 return resolve(result);
             } catch (err) {
+                console.log(err)
                 that.error=err;
                 return reject(err);
             }

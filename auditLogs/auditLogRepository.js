@@ -20,10 +20,10 @@ const AppAuditLog={
         type:String
     },
     parameters:{
-        type:String
+        type:Object
     },
     returnValues:{
-        type:String
+        type:Object
     },
     requestUrl:{
         type:String

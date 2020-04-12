@@ -1,15 +1,15 @@
 module.exports = function makeAccountCreator({
   accountRepository,
   modelBuilder,
-  accountValidator
+  accountValidator,
 }) {
-  const db = accountRepository();
+  const db = new accountRepository();
   return function createAccount({ body, appSession }) {
     const accountBuilder = modelBuilder({
       modelValidator: accountValidator,
-      appSession
+      appSession,
     });
     const account = accountBuilder(body);
-    return db.save(account);
+    return db.insert(account);
   };
 };

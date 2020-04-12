@@ -6,27 +6,20 @@ const fullyAuditedEntity = require("../core/fullyAuditedEntity");
 var Account = {
   name: {
     type: String,
-    required: true
+    required: true,
   },
   balance: {
     type: Number,
-    required: true
+    required: true,
   },
   accountNumber: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 };
 
-const FullyAuditedAccountSchema = Object.assign(
-  {},
-  fullyAuditedEntity,
-  Account
-);
-const AccountSchema = mongoose.model(
-  "accounts",
-  new Schema(FullyAuditedAccountSchema)
-);
+const FullyAuditedAccountSchema = Object.assign({},fullyAuditedEntity,Account);
+const AccountSchema = mongoose.model( "accounts", new Schema(FullyAuditedAccountSchema));
 
 function AccountRepository() {
   BaseRepository.call(this, AccountSchema);

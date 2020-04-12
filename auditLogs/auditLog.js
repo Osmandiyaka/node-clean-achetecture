@@ -2,29 +2,32 @@ function makeAuditLogger(auditLogDb) {
     const db = new auditLogDb();
     const that = this;
 
-    return function log(func, params) {
-        return new Promise(handleLogging(func, params)).finally(performLoging(func,params));
-    }
+    return (func, params)=>  new Promise(handleLogging(func, params)).finally(performLoging(func,params));
 
      function performLoging(func, params) {
         return async () => {
             try {
-                const funcName = getFuncName(func)
-                const loggerInput = {
-                    methodName:funcName,
-                    clientIpAddress:params.ip,
-                    browserInfo:'',
-                    executionDuration:that.elapse,
-                    exception:that.error,
-                    parameters:params,
-                    returnValues:that.result,
-                    requestUrl:params.path,
-                }
+                const loggerInput = buildAuditLog(func, params);
                 await db.insert(loggerInput);
             } catch (err) {
               console.log(err)
             }
         };
+    }
+
+    function buildAuditLog(func, params) {
+        const funcName = getFuncName(func);
+        const loggerInput = {
+            methodName: funcName,
+            clientIpAddress: params.ip,
+            browserInfo: '',
+            executionDuration: that.elapse,
+            exception: that.error,
+            parameters: params,
+            returnValues: that.result,
+            requestUrl: params.path,
+        };
+        return loggerInput;
     }
 
      function handleLogging(func, params) {

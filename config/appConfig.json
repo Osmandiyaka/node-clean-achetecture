@@ -1,0 +1,30 @@
+{
+    "development": {
+        "configId": "development",
+        "appName": "my app",
+        "appDesc": "my app desc",
+        "nodePort": 3000,
+        "database": "my-banking-app-db-dev",
+        "audit_logs":{
+            "isEnabled":true,
+            "hideErrors":true,
+            "isEnabledForAnonymousUsers":true,
+            "alwaysLogOnException":true,
+            "isEnabledForGetRequests":false
+        }
+    },
+    "testing": {
+        "configId": "testing",
+        "database": "my-banking-app-db-test"
+    },
+    "staging": {
+        "configId": "staging",
+        "nodePort": 8080,
+        "database": "my-banking-app-db-stag"
+    },
+    "production": {
+        "configId": "production",
+        "nodePort": 8080,
+        "database": "my-banking-app-db-prod"
+    }
+}

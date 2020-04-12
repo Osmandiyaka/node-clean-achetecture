@@ -7,6 +7,15 @@ var bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
+const merge = require('lodash.merge');
+
+const config = require('./config/appConfig.json');
+const defaultConfig = config.development;
+const environment = process.env.NODE_ENV || 'development';
+const environmentConfig = config[environment];
+const appConfig = merge(defaultConfig, environmentConfig);
+console.log(appConfig)
+
 const connectionManager = require("./core/dbConnectionManager");
 const connect = connectionManager(mongoose);
 connect("mongodb://localhost:27017/bank");

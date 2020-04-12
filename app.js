@@ -1,18 +1,11 @@
 var createError = require("http-errors");
-
-
-
-
-
 const app=require('./startUp/createApp');
 const appConfig=require('./startUp/loadConfig');
-console.log(appConfig)
+global.gAppConfig=appConfig;
 
 
 const connectionManager = require("./startUp/dbConnectionManager")(appConfig);
 connectionManager.connect();
-// const connect = connectionManager(mongoose);
-// connect("mongodb://localhost:27017/bank");
 
 const httpRequestAdaptor = require("./core/adaptHttpRequest");
 

@@ -1,4 +1,5 @@
 function makeAuditLogger(AuditLogDb) {
+    const appConfig=global.gAppConfig;
     const db = new AuditLogDb();
     const that = this;
 

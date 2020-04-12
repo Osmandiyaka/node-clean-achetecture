@@ -1,5 +1,5 @@
-function makeAuditLogger(auditLogDb) {
-    const db = new auditLogDb();
+function makeAuditLogger(AuditLogDb) {
+    const db = new AuditLogDb();
     const that = this;
 
     return (func, params)=>  new Promise(handleLogging(func, params)).finally(performLoging(func,params));

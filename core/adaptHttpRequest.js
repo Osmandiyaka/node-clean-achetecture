@@ -1,6 +1,6 @@
 const makeAuditLogger = require('../auditLogs/auditLog');
 const auditLogDb = require('../auditLogs/auditLogRepository');
-const log = makeAuditLogger(auditLogDb);
+const withLogger = makeAuditLogger(auditLogDb);
 
 function httpRequestAdaptor(controller) {
   return (req, res, next) => {
@@ -21,27 +21,18 @@ function httpRequestAdaptor(controller) {
       }
     };
 
-
-    log(controller, httpRequest)
-      .then(result => {
-        res.json(result);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).send({
-          error: err.message
-        });
-      });
-
-    // controller(httpRequest)
-    //   .then(result => {
-    //     res.json(result);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     res.status(500).send({ error: err.message });
-    //   });
+    withLogger(controller, httpRequest)
+      .then(ok(res))
+      .catch(_500(res));
   };
+
+  function _500(res) {
+    return err =>  res.status(500).send({error: err.message});
+  }
+
+  function ok(res) {
+    return result => res.json(result);
+  }
 }
 
 module.exports = httpRequestAdaptor;

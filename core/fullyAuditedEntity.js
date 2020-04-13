@@ -1,8 +1,8 @@
 module.exports = {
   creationTime: { type:Date },
-  creationUserId:  { type:Number },
+  creationUserId:  { type:String },
   lastModifiedTime:  { type:Date },
-  lastModifiedUserId: { type:Number },
+  lastModifiedUserId: { type:String },
   isDeleted:  { type:Boolean },
-  deletedByUserId:  { type:Number },
+  deletedByUserId:  { type:String },
 };

@@ -21,6 +21,7 @@ function securityManager(findUser) {
 
   return function secure(path, app) {
     app.use(passport.initialize());
+    app.use(passport.session());
     app.use( path, authenticateRequest(), handleAuthErrors());
   };
 
@@ -32,12 +33,20 @@ function securityManager(findUser) {
 
   function authenticateRequest() {
     return function (req, res, next) {
-      passport.authenticate("jwt", handleAuth(res, next))(req, res, next);
+      passport.authenticate("jwt",{ session: true }, handleAuth(req,res, next))(req, res, next);
     };
   }
 
-  function handleAuth(res, next) {
-    return (err,user)=>(err || !user)?res.sendStatus(401):next()
+  function handleAuth(req,res, next) {
+    return function (err,user) {
+      
+       req.user={
+         id:user._id,
+         name:user.fullName,
+         emailAddress:user.emailAddress
+       };
+       return (err || !user)?res.sendStatus(401):next()
+    }
   }
 }
 

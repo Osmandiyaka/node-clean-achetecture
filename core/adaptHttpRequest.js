@@ -12,7 +12,7 @@ function httpRequestAdaptor(controller) {
       method: req.method,
       path: req.path,
       appSession: {
-        userId: req.userId
+        userId: req.user.id
       },
       headers: {
         "Content-Type": req.get("Content-Type"),

@@ -13,6 +13,9 @@ const userDb = require("./auth/userDb")();
 var secure = require("./auth/routeSecurityManager")(userDb.findOne);
 secure("/api", app);
 
+// const eventPersistenceService=require('');
+// const AppEvent=require('./core/appEvent')(eventPersistenceService);
+
 require("./account").controller({ app, httpRequestAdaptor });
 require("./auth").controller({ app, httpRequestAdaptor });
 

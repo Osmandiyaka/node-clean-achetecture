@@ -1,4 +1,4 @@
-const createAccount = require("./createAccount");
+const createAccount = require("./openAccount");
 const findAccount = require("./findAccount");
 
 module.exports = {

@@ -1,5 +1,5 @@
-function modelBuilder({modelValidator,appSession}) {
-  return function buildModel(model) {
+function modelBuilder(appSession) {
+  return function buildModel(model,modelValidator) {
     const validationResult = modelValidator(model);
     if (validationResult.hasError)
       throw new Error(validationResult.errorMessage);

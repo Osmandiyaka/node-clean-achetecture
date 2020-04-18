@@ -20,9 +20,15 @@ module.exports=function accountBuilder({accountRepository}) {
       debit:debit,
       credit:credit,
       close:close,
-      block:block
+      block:block,
+      getId:()=>account._id,
+      equals:equals
 
     });
+
+    function equals(obj) {
+      return (obj) => getId() === obj.getId() && getAccountNumber();
+    }
 
     function debit(amount) {
       account.balance-=amount;

@@ -28,12 +28,8 @@ const Customer = {
   }]
 };
 
-const FullyAuditedCustomerSchema = Object.assign({},
-  fullyAuditedEntity,
-  Customer
-);
+const FullyAuditedCustomerSchema = Object.assign({},fullyAuditedEntity, Customer);
 const CustomerSchema = mongoose.model("customers", new Schema(FullyAuditedCustomerSchema));
-
 function CustomerRepository() {
   BaseRepository.call(this, CustomerSchema);
 }

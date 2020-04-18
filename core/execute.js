@@ -1,5 +1,5 @@
 
-function execute(func) {
+async function execute(func) {
     try {
         const resulte=await func();
         return Promise.resolve(resulte);

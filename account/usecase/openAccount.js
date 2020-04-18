@@ -1,14 +1,19 @@
-module.exports = function makeAccountCreator({accountRepository,modelBuilder,}) {
+module.exports = function makeAccountCreator({accountRepository,modelBuilder,createCustomer,execute}) {
   const db = new accountRepository();
   
   return function openAccount({ body, appSession }) {
     const {account,customer}=body;
     const buildModel = modelBuilder(appSession);
-
-    const customerModel=buildModel(customer,validateCustomerModel);
-    const accountModel = buildModel(account,validateCreateAccountModel);
-
-    return db.insert(accountModel);
+    
+    return execute(async ()=>{
+      const customerModel=buildModel(customer,validateCustomerModel);
+      const createdCustomer=await createCustomer(customerModel);
+      const accountModel = buildModel(account,validateCreateAccountModel);
+      accountModel.customerId=createdCustomer.id;
+      const savedCustomer=await db.insert(accountModel);
+      return savedCustomer;
+    });
+   
   };
 
   function validateCreateAccountModel(createAccountModel) {

@@ -1,14 +1,8 @@
 const { createAccount, findAccount } = require("./usecase/");
 
-function AccountAppService({ accountRepository, modelBuilder, accountValidator }) {
-  console.log(accountRepository,'res')
+function AccountAppService({ accountRepository, modelBuilder,execute }) {
   return Object.freeze({
-    createAccount: createAccount({
-      accountRepository,
-      modelBuilder,
-      accountValidator
-    })
-    // findById: findAccount(db)
+    createAccount: createAccount({accountRepository,modelBuilder,execute})
   });
 }
 

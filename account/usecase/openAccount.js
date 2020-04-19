@@ -1,17 +1,27 @@
-module.exports = function makeAccountCreator({accountRepository,modelBuilder,createCustomer,execute}) {
-  const db = new accountRepository();
+const _AccountDb=require('../accountRepository');
+const _modelBuilder=require('../../core/modelBuilder');
+const _execute=require('../../core/execute');
+const _createCustomer=require('../../customer/usecase/createCustomer');
+
+
+module.exports = function makeAccountCreator({AccountDb,modelBuilder,createCustomer,execute,appEvent}={}) {
+  const db = AccountDb? new AccountDb():new _AccountDb();
+  buildModel=modelBuilder||_modelBuilder;
+  execute=execute||_execute;
+  createCustomer=createCustomer? createCustomer():  _createCustomer();
   
-  return function openAccount({ body, appSession }) {
+  return function openAccount({ body, appSession }={}) {
     const {account,customer}=body;
-    const buildModel = modelBuilder(appSession);
-    
     return execute(async ()=>{
-      const customerModel=buildModel(customer,validateCustomerModel);
-      const createdCustomer=await createCustomer(customerModel);
-      const accountModel = buildModel(account,validateCreateAccountModel);
-      accountModel.customerId=createdCustomer.id;
-      const savedCustomer=await db.insert(accountModel);
-      return savedCustomer;
+      const createdCustomer=await createCustomer(customer,appSession);
+
+      const accountModel = buildModel({model:account,modelValidator:validateCreateAccountModel,appSession});
+      accountModel.customerId=createdCustomer._id;
+      const savedAccount=await db.insert(accountModel);
+
+      appEvent.trigger('account-opened',{customerId:createdCustomer._id,accountId:savedAccount._id});
+
+      return savedAccount;
     });
    
   };
@@ -23,10 +33,5 @@ module.exports = function makeAccountCreator({accountRepository,modelBuilder,cre
     }
   }
 
-  function validateCustomerModel(customerModel) {
-    return {
-      hasError:undefined,
-      errorMessage:''
-    }
-  }
+  
 };

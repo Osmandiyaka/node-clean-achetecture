@@ -4,7 +4,7 @@ async function execute(func) {
         const resulte=await func();
         return Promise.resolve(resulte);
     } catch (err) {
-        return Promise.resolve(err);
+        return Promise.reject(err);
     }
 }
 

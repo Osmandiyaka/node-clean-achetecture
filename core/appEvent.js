@@ -20,4 +20,4 @@ function appEvent(eventPersistenceService) {
     }
 }
 
-module.exports=appEvent;
+module.exports=appEvent();

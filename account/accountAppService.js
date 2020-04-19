@@ -1,8 +1,8 @@
 const { createAccount, findAccount } = require("./usecase/");
 
-function AccountAppService({ accountRepository, modelBuilder,execute,customerDb }) {
+function AccountAppService({ accountRepository, modelBuilder,execute,createCustomer,appEvent }) {
   return Object.freeze({
-    createAccount: createAccount({accountRepository,createCustomer:customerDb.insert,modelBuilder,execute})
+    createAccount: createAccount({accountRepository,createCustomer,modelBuilder,execute,appEvent})
   });
 }
 

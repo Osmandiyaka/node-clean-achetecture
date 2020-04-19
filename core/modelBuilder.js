@@ -1,6 +1,5 @@
-function modelBuilder(appSession) {
-  return function buildModel(model,modelValidator) {
-    const validationResult = modelValidator(model);
+function buildModel({model,modelValidator,appSession}) {
+  const validationResult = modelValidator(model);
     if (validationResult.hasError)
       throw new Error(validationResult.errorMessage);
 
@@ -13,7 +12,6 @@ function modelBuilder(appSession) {
         isDeleted:false,
         deletedByUserId:null
     });
-  };
 }
 
-module.exports = modelBuilder;
+module.exports = buildModel;
